@@ -5,6 +5,8 @@ source='ra226'
 clover='clover1'
 clover='clover1'
 leaf='leaf0'
+
+fileCommand(m,n,o,p) = sprintf('< paste %s.dat %s-%s-%s.dat',m,n,o,p)
 graphTitle(n,m,o) = sprintf("Energy vs. Centroid\n%s %s - using %s",n,m,o)
 psName(n,m,o) = sprintf("%s-%s-%s.ps",n,m,o)
 
@@ -14,9 +16,9 @@ c=1.
 
 f(x)=a*x**2+b*x+c
 
-fit f(x) fileCommand(source,clover,leaf,file) u 3:2 via a,b,c
+fit f(x) fileCommand(source,clover,leaf,fileName) u 3:2 via a,b,c
 
-set title graphTitle(clover,leaf,file)
+set title graphTitle(clover,leaf,fileName)
 set xlabel "Centroid (arb)"
 set ylabel "Energy (keV)"
 unset key
@@ -29,9 +31,9 @@ set y2tics border
 
 set x2zeroaxis lt -1
 
-plot fileCommand(clover,leaf,source) u 3:2, f(x), \
-     fileCommand(clover,leaf,source) u 3:($2-f($3)) axes x1y2
+plot fileCommand(source,clover,leaf,fileName) u 3:2, f(x), \
+     fileCommand(source,clover,leaf,fileName) u 3:($2-f($3)) axes x1y2
 
 set terminal postscript enhanced color solid
-set output pngName(clover,leaf,file)
+set output pngName(clover,leaf,fileName)
 replot
