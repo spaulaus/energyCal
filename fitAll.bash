@@ -9,7 +9,7 @@ sed '4c\'$currentSource plot.gp > plot.temp
 mv plot.temp plot.gp
 
 currentFile=$(echo "file='$fileName'")
-sed '5c\'$currentfile plot.gp > plot.temp
+sed '5c\'$currentFile plot.gp > plot.temp
 mv plot.temp plot.gp
 
 for file in clover*-$fileName.dat
