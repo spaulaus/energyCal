@@ -1,20 +1,20 @@
 #!/bin/bash
 source=$1
-fileName=$2
+folderName=$2
 
-rm fitResults-$fileName.dat
+rm -f temp.log folderName/fitResults.* fit.log 
 
 currentSource=$(echo "source='$source'")
 sed '4c\'$currentSource plot.gp > plot.temp
 mv plot.temp plot.gp
 
-currentFile=$(echo "file='$fileName'")
-sed '5c\'$currentFile plot.gp > plot.temp
+currentFolder=$(echo "folderName='$folderName'")
+sed '5c\'$currentFolder plot.gp > plot.temp
 mv plot.temp plot.gp
 
-for file in clover*-$fileName.dat
+for file in $folderName/data/*.dat
 do
-    temp=`basename $file -$fileName.dat` 
+    temp=`basename $file .dat`
     clover=`echo $temp | awk -F\- '{print $1}'`
     leaf=`echo $temp | awk -F\- '{print $2}'`
     
@@ -31,8 +31,13 @@ do
     tail -15 fit.log > temp.log
 
     echo -e ""$clover" - "$leaf"\n ----------" \
-	>> fitResults-$source.dat
+	>> fitResults.dat
     
-    awk '{if($2=="=") print $0}' temp.log >> fitResults-$source.dat
-    echo -e "\n" >> fitResults-$fileName.dat
+    cat temp.log >> fitResults.dat
+    #awk '{if($2=="=") print $0}' temp.log >> fitResults.dat
+    echo -e "\n\n" >> fitResults.dat
 done
+rm temp.log
+,makePdf *.ps fitResults.pdf
+mv fitResults.* $folderName
+rm *.ps
