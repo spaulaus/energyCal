@@ -1,6 +1,21 @@
 #!/bin/bash
 source=$1
 folderName=$2
+dataDir="$2/data"
+
+if [ ! -d $folderName ]
+then
+    mkdir -p $dataDir
+    for i in 1 2
+    do
+	for j in 0 1 2 3
+	do
+	echo -e "#Clover $i - Leaf $j \n" > \
+	    $dataDir/clover"$i"-leaf"$j".dat
+	done
+    done
+    exit
+fi
 
 rm -f temp.log folderName/fitResults.* fit.log 
 

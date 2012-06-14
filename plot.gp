@@ -1,12 +1,12 @@
 reset
 set terminal wxt enhanced
 
-source='ra226'
-folderName='energyCal02'
-clover='clover2'
-leaf='leaf3'
+source='sourceFiles/ra226.dat'
+folderName='energyCal04/'
+clover='cal'
+leaf='02142012
 
-fileCommand(m,n,o,p) = sprintf('< paste sourceFiles/%s.dat %s/data/%s-%s.dat',m,n,o,p)
+fileCommand(m,n,o,p) = sprintf('< paste %s %s/data/%s-%s.dat',m,n,o,p)
 graphTitle(n,m,o) = sprintf("Energy vs. Centroid\n%s %s - using %s",n,m,o)
 psName(n,m) = sprintf("%s-%s.ps",n,m)
 
