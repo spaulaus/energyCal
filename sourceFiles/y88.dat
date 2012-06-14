@@ -1,0 +1,10 @@
+# This guy is to match the two lines header in the data files
+#Nuclide	Energy (keV)
+Pb-210	46.539
+Am-241	59.5409
+Cd-109	88.0336
+Co-57	122.06065
+Cs-137	661.657
+Co-60	1173.228
+Co-60	1332.492
+Y-88	1836.063
