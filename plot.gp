@@ -1,3 +1,8 @@
+#Copyright S. V. Paulauskas 2012
+#Distributed under GPL v.3.0
+#This gnuplot script will execute with fitAll.bash to
+#  perform fits on data taken from LeRIBSS
+#Associated file: fitAll.bash
 reset
 set terminal wxt enhanced
 

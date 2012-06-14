@@ -1,4 +1,9 @@
 #!/bin/bash
+# Copyright S. V. Paulauskas 2012
+# This script is published under GPL v.3.0
+# A script to do energy calibrations and gain matching
+#  for clover data taken at LeRIBSS
+# Associated File: plot.gp
 source=$1
 folderName=$2
 dataDir="$2/data"
