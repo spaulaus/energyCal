@@ -2,10 +2,12 @@
 source=$1
 folderName=$2
 dataDir="$2/data"
+resDir="$2/results"
 
 if [ ! -d $folderName ]
 then
     mkdir -p $dataDir
+    mkdir -p $resDir
     for i in 1 2
     do
 	for j in 0 1 2 3
@@ -41,18 +43,54 @@ do
     sed '7c\'$currentLeaf plot.gp > plot.temp
     mv plot.temp plot.gp
 
-    gnuplot plot.gp
+    for fit in cube lin quad
+    do
+	fitType=$(echo "fitType='$fit'")
 
-    tail -15 fit.log > temp.log
+	if [[ $fit == cube ]]
+	then
+	    fitFunc='f(x)=a*x**3+b*x**2+c*x+d'
+	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b,c,d"
+	    label='set label 1 sprintf("f(x) = %g (1/keV^2) x^3 + %g (1/keV) x^2 + %g keV x + %g keV",a,b,c,d) at 50, 2300'
+	elif [[ $fit == lin ]]
+	then
+	    fitFunc='f(x)=a*x+b'
+	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b"
+	    label='set label 1 sprintf("f(x) = %g keV x + %g keV",a,b) at 50, 2300'
+	else
+	    fitFunc='f(x)=a*x**2+b*x+c'
+	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b,c"
+	    label='set label 1 sprintf("f(x) = %g (1/keV) x^2 + %g keV x + %g keV",a,b,c) at 50, 2300'
+	fi
 
-    echo -e ""$clover" - "$leaf"\n ----------" \
-	>> fitResults.dat
+	sed '8c\'$fitType plot.gp > plot.temp
+	mv plot.temp plot.gp
+
+	sed '19c\'$fitFunc plot.gp > plot.temp
+	mv plot.temp plot.gp
+
+	sed '21c\'"$fitCommand" plot.gp > plot.temp
+	mv plot.temp plot.gp
+	
+	sed '28c\'"$label" plot.gp > plot.temp
+	mv plot.temp plot.gp
+	
+	gnuplot plot.gp
+	
+	tail -15 fit.log > temp.log
+	
+	echo -e ""$clover" - "$leaf"\n ----------" \
+	    >> fitResults-"$fit".dat
     
-    cat temp.log >> fitResults.dat
+	cat temp.log >> fitResults-"$fit".dat
     #awk '{if($2=="=") print $0}' temp.log >> fitResults.dat
-    echo -e "\n\n" >> fitResults.dat
+	echo -e "\n" >> fitResults-"$fit".dat
+    done
 done
 rm temp.log
-,makePdf *.ps fitResults.pdf
-mv fitResults.* $folderName
+for fit in quad lin cube
+do
+    ,makePdf *-"$fit".ps fitResults-"$fit".pdf
+done
+mv fitResults-*.* $resDir
 rm *.ps
