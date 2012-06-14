@@ -1,0 +1,4 @@
+1. Cleanup the fitResults.dat output
+2. Dream up a new way to handle the lin/cube/quad fits
+3. Fix the equation for the cubic fit 
+   -it overruns the chart space at the moment
