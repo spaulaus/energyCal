@@ -33,10 +33,13 @@ To use:
    36.6   73134    11.6	1.42	32     39
    47.9  123737   1.7		1.55	140    150
    ...
+   
+   Every column after the first is completely optional, and just things I like
+   to keep track of.   
       
    You should have the same number of fit peaks as you have lines in your
    source file, and the peak order *must* match with the order given in the 
-   source file.
+   source file. 
 
 4. Once the data files are completely populated run the following command:
 

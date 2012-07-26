@@ -6,9 +6,9 @@
 reset
 #set terminal wxt enhanced
 
-source='3'
-folderName='test00'
-labelYPos=''
+source='sourceFiles/73cu.dat'
+folderName='73cu/'
+labelYPos='4180.54'
 clover='clover3'
 leaf='leaf3'
 fitType='quad'
