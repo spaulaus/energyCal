@@ -13,7 +13,7 @@ if [ ! -d $folderName ]
 then
     mkdir -p $dataDir
     mkdir -p $resDir
-    for i in 1 2
+    for i in `seq 1 $1`
     do
 	for j in 0 1 2 3
 	do
@@ -27,11 +27,11 @@ fi
 rm -f temp.log folderName/fitResults.* fit.log 
 
 currentSource=$(echo "source='$source'")
-sed '4c\'$currentSource plot.gp > plot.temp
+sed '9c\'$currentSource plot.gp > plot.temp
 mv plot.temp plot.gp
 
 currentFolder=$(echo "folderName='$folderName'")
-sed '5c\'$currentFolder plot.gp > plot.temp
+sed '10c\'$currentFolder plot.gp > plot.temp
 mv plot.temp plot.gp
 
 for file in $folderName/data/*.dat
@@ -43,9 +43,9 @@ do
     currentClover=$(echo "clover='$clover'")
     currentLeaf=$(echo "leaf='$leaf'")
     
-    sed '6c\'$currentClover plot.gp > plot.temp
+    sed '11c\'$currentClover plot.gp > plot.temp
     mv plot.temp plot.gp
-    sed '7c\'$currentLeaf plot.gp > plot.temp
+    sed '12c\'$currentLeaf plot.gp > plot.temp
     mv plot.temp plot.gp
 
     for fit in cube lin quad
@@ -56,25 +56,25 @@ do
 	then
 	    fitFunc='f(x)=a*x**3+b*x**2+c*x+d'
 	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b,c,d"
-	    label='set label 1 sprintf("f(x) = %g (1/keV^2) x^3 + %g (1/keV) x^2 + %g keV x + %g keV",a,b,c,d) at 50, 2300'
+	    label='set label 1 sprintf("f(x) = %g (1/keV^2) x^3 + %g (1/keV) x^2 + %g keV x + %g keV",a,b,c,d) at 500, 4000'
 	elif [[ $fit == lin ]]
 	then
 	    fitFunc='f(x)=a*x+b'
 	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b"
-	    label='set label 1 sprintf("f(x) = %g keV x + %g keV",a,b) at 50, 2300'
+	    label='set label 1 sprintf("f(x) = %g keV x + %g keV",a,b) at 500, 4000'
 	else
 	    fitFunc='f(x)=a*x**2+b*x+c'
 	    fitCommand="fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b,c"
-	    label='set label 1 sprintf("f(x) = %g (1/keV) x^2 + %g keV x + %g keV",a,b,c) at 50, 2300'
+	    label='set label 1 sprintf("f(x) = %g (1/keV) x^2 + %g keV x + %g keV",a,b,c) at 500, 4000'
 	fi
 
-	sed '8c\'$fitType plot.gp > plot.temp
+	sed '13c\'$fitType plot.gp > plot.temp
 	mv plot.temp plot.gp
 
-	sed '19c\'$fitFunc plot.gp > plot.temp
+	sed '24c\'$fitFunc plot.gp > plot.temp
 	mv plot.temp plot.gp
 
-	sed '21c\'"$fitCommand" plot.gp > plot.temp
+	sed '26c\'"$fitCommand" plot.gp > plot.temp
 	mv plot.temp plot.gp
 	
 	sed '28c\'"$label" plot.gp > plot.temp

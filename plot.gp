@@ -6,9 +6,9 @@
 reset
 set terminal wxt enhanced
 
-source='sourceFiles/ra226.dat'
-folderName='energyCal02'
-clover='clover2'
+source='sourceFiles/73cu.dat'
+folderName='73cu'
+clover='clover3'
 leaf='leaf3'
 fitType='quad'
 
@@ -25,22 +25,25 @@ f(x)=a*x**2+b*x+c
 
 fit f(x) fileCommand(source,folderName, clover,leaf) u 3:2 via a,b,c
 
+set label 1 sprintf("f(x) = %g (1/keV) x^2 + %g keV x + %g keV",a,b,c) at 500, 4000
 set title graphTitle(clover,leaf,source)
-set xlabel "Centroid (arb)"
 set ylabel offset 2,0 "Energy (keV)"
 unset key
 
-set label 1 sprintf("f(x) = %g (1/keV) x^2 + %g keV x + %g keV",a,b,c) at 50, 2300
-
-set yrange [-500:2500]
-set y2range [-1:5]
-set y2tics border
-
-set x2zeroaxis lt -1
-
-plot fileCommand(source,folderName,clover,leaf) u 3:2, f(x), \
-     fileCommand(source,folderName,clover,leaf) u 3:($2-f($3)) axes x1y2
-
-set terminal postscript enhanced color solid
+set terminal postscript enhanced color solid "Helvetica" 12
 set output psName(clover,leaf,fitType)
-replot
+
+set multiplot
+set size 1,0.6
+set origin 0,0.4
+plot fileCommand(source,folderName,clover,leaf) u 3:2, f(x)
+
+set xlabel "Centroid (arb)"
+unset title
+set yrange [-1.5:1.5]
+set size 1,0.4
+set origin 0,0.0
+plot fileCommand(source,folderName,clover,leaf) u 3:($2-f($3)), 0 lc -1
+
+unset multiplot
+
