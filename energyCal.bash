@@ -15,7 +15,7 @@ calDir="$2/cals"
 function makePdf {
     gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=${psFiles[0]} -dBATCH \
 	-dPDFFitPage $(
-	for i in $(seq $(expr ${#psFiles[@]} - 1) -1 1) 
+	for i in $(seq 1 $(expr ${#psFiles[@]} - 1)) 
 	do  
 	    echo -n "${psFiles[$i]} " 
 	    done)
