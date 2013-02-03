@@ -31,7 +31,7 @@ then
     do
 	for j in 0 1 2 3
 	do
-	echo -e "#Clover $i - Leaf $j \n" > \
+	echo -e "#Clover $i - Leaf $j \n#X       AREA    %ERR    FWHM    Gfit (min)      Gfit (max) " > \
 	    $dataDir/clover"$i"-leaf"$j".dat
 	done
     done
