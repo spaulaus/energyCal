@@ -1,8 +1,8 @@
-#Copyright S. V. Paulauskas 2012
+#Copyright S. V. Paulauskas 2012-2014
 #Distributed under GPL v.3.0
-#This gnuplot script will execute with fitAll.bash to
+#This gnuplot script will execute with energyCal.bash to
 #  perform fits on data taken from LeRIBSS
-#Associated file: fitAll.bash
+#Associated file: energyCal.bash
 reset
 #set terminal wxt enhanced
 

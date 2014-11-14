@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright S. V. Paulauskas 2012
+# Copyright S. V. Paulauskas 2012-2014
 # This script is published under GPL v.3.0
 # A script to do energy calibrations and gain matching
 #  for clover data taken at LeRIBSS
